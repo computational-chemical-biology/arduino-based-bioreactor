@@ -12,25 +12,31 @@ To adjust, adapt and/or transfer the code to the Arduino board, the following so
 
 In terms of hardware, the following are required:
 
-- 2 peristaltic pumps (flow rate 450 ml/min)
-- 1 Arduino UNO board
-- 1 breadboard
-- 2 5V relay modules
+- 2x peristaltic pumps (flow rate 450 ml/min)
+- 1x magnetic stirrer
+- 1x heated magnetic stirrer
+- 1x Arduino UNO board
+- 1x breadboard
+- 2x 5V relay modules
 - autoclavable silicone tubings
-- 3 spinner flasks of 250 ml
+- 3x 500ml reagent bottles
+- 3x customized Teflon caps
+- 8x customized stainless steel cannulas
 - jumper wires
 - air compressor for aquarium (flow rate 1.5 L/min)
-- 0.22 µm membrane filters
+- 3x 0.22 µm membrane filters
+- Raspberry Pi board (any model)
 
 ## Software code
 
-The code used in the project can be found in the ["software-code"](https://github.com/joaovitorgferreira/arduino-based-bioreactor/blob/main/software-code) file.
+The code used in the project can be found in the ["software-code"](https://github.com/joaovitorgferreira/arduino-based-bioreactor/blob/main/software-code) and ["raspberry-code"](https://github.com/joaovitorgferreira/arduino-based-bioreactor/blob/main/raspberry-code) files.
 
 ## Hardware structure
 
 The general structure of the hardware is exemplified in the image below.
 
-<img width="946" alt="esquema sistema arduino" src="https://github.com/joaovitorgferreira/arduino-based-bioreactor/assets/90862308/ab418b43-f379-4db6-a072-a5a12c3d1c63">
+<img width="692" alt="image" src="https://github.com/joaovitorgferreira/arduino-based-bioreactor/assets/90862308/4acbec0b-d832-427c-a724-a37546669b8a">
+
 
 ### Circuit layout 
 

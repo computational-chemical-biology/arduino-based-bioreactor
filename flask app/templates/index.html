@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Control</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            background-color: #9CA098;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #container {
+            display: inline-block;
+            text-align: left;
+            background-color: #92968E;
+            padding: 20px;
+            color: #0A0D07;
+        }
+
+        #serialMonitorContainer {
+            display: inline-block;
+            float: left;
+            background-color: #92968E;
+            padding: 10 px;
+            margin-bottom: 10px; /* Add some spacing between the link and the heading */
+        }
+    </style>
+</head>
+<body>
+    <div id="serialMonitorContainer">
+        <a href="{{ url_for('monitor') }}" target="_blank" style="color: #0A0D07;">Open Serial Monitor</a>
+    </div>
+    <br>
+    <h1 style="color: #0A0D07;">Arduino Control</h1>
+    <div id="container">
+    <p>To update the time parameters, please input only numerical values into the fields below.</p>
+    <br>
+    <form id="commandForm">
+        <label for="interval">Interval between cycles (days):</label>
+        <input type="text" id="interval" name="interval" required>
+        <br>
+        <label for="pump1dur">Pump 1 activation time (seconds):</label>
+        <input type="text" id="pump1dur" name="pump1dur" required>
+        <br>
+        <label for="pump2dur">Pump 2 activation time (seconds):</label>
+        <input type="text" id="pump2dur" name="pump2dur" required>
+        <br>
+        <label for="pumpinterval">Interval between pump activation (seconds):</label>
+        <input type="text" id="pumpinterval" name="pumpinterval" required>
+        <br><br>
+        <button type="button" onclick="sendCommand()">Update parameters</button>
+    </form>
+    <script>
+        function sendCommand() {
+            var interval = document.getElementById('interval').value;
+            var pump1dur = document.getElementById('pump1dur').value;
+            var pump2dur = document.getElementById('pump2dur').value;
+            var pumpinterval = document.getElementById('pumpinterval').value;
+    
+            var interval_ms = interval*24*60*60*1000
+            var pump1dur_ms = pump1dur*1000
+            var pump2dur_ms = pump2dur*1000
+            var pumpinterval_ms = pumpinterval*1000
+
+            // Construct a command string dynamically based on provided values
+            var command = '';
+            if (interval !== '') {
+                command += `I${interval_ms} `;
+            }
+            if (pump1dur !== '') {
+                command += `P1${pump1dur_ms} `;
+            }
+            if (pump2dur !== '') {
+                command += `P2${pump2dur_ms} `;
+            }
+            if (pumpinterval !== '') {
+                command += `Pi${pumpinterval_ms}`;
+            }
+    
+            fetch('/send_commands', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'commands=' + encodeURIComponent(command),
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+            });
+        }
+    </script>
+    <footer>
+        <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    </footer>
+</div>      
+</body>
+</html>
